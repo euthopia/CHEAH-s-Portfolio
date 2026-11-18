@@ -1,5 +1,5 @@
 import * as THREE from 'three/webgpu'
-import { mix, uniform, uv } from 'three/tsl'
+import { mix, uniform, uv, vec4 } from 'three/tsl'
 import { Game } from '../Game.js'
 import { MeshDefaultMaterial } from '../Materials/MeshDefaultMaterial.js'
 
@@ -37,6 +37,16 @@ export class Garage
         this.secretUnlocked = this.read('cheah:journey-complete') === '1'
         this.current = null
 
+        // Paint glow: night lighting multiplies colours by deep blue, so paints get a soft
+        // self-illumination that rises after dark to keep their real colour readable
+        this.glow = uniform(0.12)
+        this.game.ticker.events.on('tick', () =>
+        {
+            const progress = this.game.dayCycles?.progress ?? 0
+            const night = THREE.MathUtils.smoothstep(progress, 0.18, 0.32) * (1 - THREE.MathUtils.smoothstep(progress, 0.62, 0.8))
+            this.glow.value = 0.12 + night * 0.5
+        }, 9)
+
         const saved = this.read(STORAGE_KEY)
         if(saved)
         {
@@ -71,7 +81,10 @@ export class Garage
         {
             const colorA = uniform(new THREE.Color(a))
             const colorB = uniform(new THREE.Color(b))
-            const material = new MeshDefaultMaterial({ colorNode: mix(colorA, colorB, uv().y) })
+            const base = mix(colorA, colorB, uv().y)
+            const material = new MeshDefaultMaterial({ colorNode: base })
+            const lit = material.outputNode
+            material.outputNode = vec4(lit.rgb.add(base.mul(this.glow)), lit.a)
             entry = { material, colorA, colorB }
             this.materials.set(id, entry)
         }

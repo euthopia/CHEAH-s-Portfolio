@@ -238,6 +238,8 @@ export class Extras
     setConsole()
     {
         window.chern = {
+            game: this.game,
+            extras: this,
             hello: () =>
             {
                 console.log(`%c👋 Hi! I'm ${profile.name}, ${profile.role} at ${profile.company}.\nLinkedIn: ${profile.linkedin}\nEmail: ${profile.email} · Phone/WhatsApp: ${profile.phone}`, 'color:#ff6f91;font:700 14px monospace')

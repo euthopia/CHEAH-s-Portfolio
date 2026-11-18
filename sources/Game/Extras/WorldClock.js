@@ -20,8 +20,10 @@ export class WorldClock
 
         const landing = this.game.respawns.getByName('landing') ?? this.game.respawns.getDefault()
         this.anchor = landing ? landing.position.clone() : new THREE.Vector3()
-        this.anchor.add(new THREE.Vector3(-6.5, 4.2, -7.5))
+        // Right of the starting line, inside the default camera view (checked against the game camera)
+        this.anchor.add(new THREE.Vector3(7.5, 1.7, 3.5))
         this.group.position.copy(this.anchor)
+        this.group.scale.setScalar(0.5)
 
         this.colors = {
             ink: new THREE.Color('#0b0c0e'),
