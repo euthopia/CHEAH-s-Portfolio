@@ -18,13 +18,13 @@ def font(weight, size):
 # ---------------------------------------------------------------- Career stones
 # Shader reads: R = text, G = label box. Same canvas sizes as the original meshes expect.
 CAREER = {
-    # Slot (fixed position in the 3D world)   size        lines            # years shown with year.start = 2012
-    'careerHetic':           ((316, 60), ['SCHOOL YEARS', 'UPSR 6A · PT3 7A']),            # 2012 → 2016
-    'careerUzik':            ((168, 60), ['SPM', '10 A\'S']),                            # 2017 → 2019
-    'careerImmersiveGarden': ((340, 60), ['AI ENGINEER', 'MODELS TO PRODUCTION']),       # 2020 → 2022
-    'careerOnlineTeacher':   ((332, 92), ['HUAWEI MALAYSIA', 'CLOUD & AI', 'SOLUTION ARCHITECT']),  # 2023 → now
-    'careerFreelancer':      ((240, 60), ['AI × CLOUD', 'ALWAYS LEARNING']),             # 2015 → now
-    'careerIRLTeacher':      ((268, 92), ['LEVELLING UP', 'DATA · CODE · CLOUD', '23 A\'S MINDSET']),  # 2017 → 2025
+    # Slot (fixed position in the 3D world)   size        lines            # years shown with year.start = 2014
+    'careerHetic':           ((316, 60), ['SCHOOL YEARS', 'PT3 7A · SPM 10A']),                  # 2014 → 2018
+    'careerUzik':            ((168, 60), ['LEARNING', 'AI & CLOUD']),                            # 2019 → 2021
+    'careerImmersiveGarden': ((340, 60), ['AI ENGINEER · 2023–25', 'PROTOTYPING · MLOPS']),      # 2022 → 2024
+    'careerOnlineTeacher':   ((332, 92), ['HUAWEI MALAYSIA', 'AI CLOUD ARCHITECT', 'SINCE 2025']),  # 2025 → now
+    'careerFreelancer':      ((240, 60), ['AI × CLOUD', 'ALWAYS LEARNING']),                     # 2017 → now
+    'careerIRLTeacher':      ((268, 92), ['UPSR 6A · PT3 7A', 'SPM 10A', '23 A\'S IN TOTAL']),
 }
 
 def career(name, size, lines):
@@ -130,9 +130,9 @@ def card(path, w, h, pal, seed, motif, kicker, title, sub, big=None):
 
 P = os.path.join(ROOT, 'projects', 'images')
 projects = [
-    ('cheah-huawei', 'huawei', 'grid',    [('NOW', 'Huawei Malaysia', 'Cloud & AI Solution Architect'), ('ROLE', 'Design.\nArchitect. Deliver.', 'From customer problem to cloud blueprint'), ('FOCUS', 'Enterprise\nCloud', 'Scalable, secure, cost-aware architectures')]),
-    ('cheah-ai',     'ai',     'network', [('BEFORE', 'AI Engineer', 'Taking models from notebook to production'), ('CRAFT', 'Data → Model\n→ Product', 'Training, evaluation, deployment'), ('LOVE', 'Generative AI', 'LLMs, RAG and intelligent assistants')]),
-    ('cheah-cloud',  'cloud',  'clouds',  [('BRIDGE', 'Cloud × AI', 'Where infrastructure meets intelligence'), ('BUILD', 'AI on Cloud', 'Platforms that let AI scale'), ('MINDSET', 'Architect\nThinking', 'Trade-offs, reliability, simplicity')]),
+    ('cheah-a2',     'huawei', 'grid',    [('HUAWEI · 2025', 'A2 Migration', 'NVIDIA H200 → Huawei NPU'), ('ROLE', 'AI Cloud\nSolution Architect', 'Migration architecture & delivery'), ('OUTCOME', 'GPU → NPU', 'AI workloads moved onto Huawei compute')]),
+    ('cheah-proto',  'ai',     'network', [('2023 – 2025', 'AI Prototyping', 'From idea to working demo, fast'), ('ROLE', 'AI Engineer', 'Build, test, iterate'), ('CRAFT', 'Idea → Model\n→ Demo', 'Prototypes that prove value early')]),
+    ('cheah-mlops',  'cloud',  'clouds',  [('2023 – 2025', 'AIOps & MLOps', 'Models that keep running in production'), ('ROLE', 'AI Engineer', 'Pipelines, deployment, monitoring'), ('LOOP', 'Train → Deploy\n→ Monitor', 'Automated ML lifecycle')]),
     ('cheah-school', 'school', 'stars',   [('UPSR', 'UPSR', '6 A\'s', '6A'), ('PT3', 'PT3', '7 A\'s', '7A'), ('SPM', 'SPM', '10 A\'s — straight A student', '10A')]),
 ]
 for i, (key, pal, motif, slides) in enumerate(projects):
@@ -154,7 +154,7 @@ for i, (key, pal, motif, title, sub) in enumerate(lab):
     card(os.path.join(L, f'{key}.png'), 960, 540, PALETTES[pal], 100 + i, motif, 'LAB', title, sub)
     card(os.path.join(L, f'{key}-mini.png'), 240, 136, PALETTES[pal], 100 + i, motif, None, title, None)
 
-card(os.path.join(ROOT, 'social', 'share-image.png'), 1200, 630, PALETTES['ai'], 7, 'network', 'PORTFOLIO', 'CHEAH CHERN EU', 'Cloud & AI Solution Architect · Huawei Malaysia')
+card(os.path.join(ROOT, 'social', 'share-image.png'), 1200, 630, PALETTES['ai'], 7, 'network', 'PORTFOLIO', 'CHEAH CHERN EU', 'AI Cloud Solution Architect · Huawei Malaysia')
 print('done')
 
 # ---------------------------------------------------------------- Time machine screens (140x124 pixel-art)

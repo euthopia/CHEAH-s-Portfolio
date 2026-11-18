@@ -1,6 +1,6 @@
 # CHEAH CHERN EU · 3D Portfolio
 
-Interactive 3D portfolio of **CHEAH CHERN EU**, Cloud & AI Solution Architect at Huawei Malaysia.
+Interactive 3D portfolio of **CHEAH CHERN EU**, AI Cloud Solution Architect at Huawei Malaysia.
 World engine based on [Bruno Simon's folio-2025](https://github.com/brunosimon/folio-2025) (MIT).
 
 ## What's custom

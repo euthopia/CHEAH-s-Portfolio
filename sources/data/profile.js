@@ -4,9 +4,11 @@ export default {
     name: 'CHEAH CHERN EU',
     shortName: 'Chern Eu',
     born: 2000,
-    role: 'Cloud & AI Solution Architect',
+    role: 'AI Cloud Solution Architect',
+    roleSince: 2025,
     company: 'Huawei Malaysia',
     previousRole: 'AI Engineer',
+    previousRoleYears: '2023 – 2025',
     country: 'Malaysia',
     linkedin: 'https://my.linkedin.com/in/cheah-chern-eu-48b3ba132',
     email: 'cheah.c.eu@gmail.com',
@@ -23,7 +25,13 @@ export default {
     totalAs: 23,
     career:
     [
-        { title: 'AI Engineer', text: 'Built and shipped machine-learning models, taking them from notebooks to production.' },
-        { title: 'Cloud & AI Solution Architect @ Huawei Malaysia', text: 'Designs cloud and AI architectures that help organisations adopt AI at scale.' },
+        { title: 'AI Engineer', years: '2023 – 2025', text: 'AI prototyping and AIOps / MLOps: from quick prototypes to models running reliably in production.' },
+        { title: 'AI Cloud Solution Architect @ Huawei Malaysia', years: '2025 – now', text: 'Architected the A2 migration, moving AI workloads from NVIDIA H200 GPUs to Huawei NPUs.' },
+    ],
+    projects:
+    [
+        { title: 'A2 Migration: H200 → Huawei NPU', role: 'AI Cloud Solution Architect', at: 'Huawei Malaysia', year: '2025' },
+        { title: 'AI Prototyping', role: 'AI Engineer', year: '2023 – 2025' },
+        { title: 'AIOps & MLOps', role: 'AI Engineer', year: '2023 – 2025' },
     ]
 }

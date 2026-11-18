@@ -10,7 +10,8 @@ const text = `
         C H E R N   E U  ·  P O R T F O L I O
 
 ╔═ Hello, fellow developer ═════╗
-║ I'm CHEAH CHERN EU — Cloud & AI Solution Architect at Huawei Malaysia, former AI Engineer.
+║ I'm CHEAH CHERN EU — AI Cloud Solution Architect at Huawei Malaysia (since 2025), AI Engineer 2023–2025.
+║ Projects: A2 migration (H200 → Huawei NPU) · AI prototyping · AIOps & MLOps.
 ║ Born in 2000 · UPSR 6A · PT3 7A · SPM 10A (23 A's in total).
 ╚═══════════════════════════════╝
 

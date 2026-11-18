@@ -29,10 +29,14 @@ const blocks = {
         <div class="cg-total"><span>Total</span><b data-count="${profile.totalAs}">0</b><span>A's</span></div>`,
     career: () => `
         <ol class="cg-timeline">
-            <li class="is-now"><small>Now</small><b>${escape(profile.role)}</b><span>${escape(profile.company)}</span></li>
-            <li><small>Before</small><b>${escape(profile.previousRole)}</b><span>Models from notebook to production</span></li>
+            <li class="is-now"><small>${profile.roleSince} → now</small><b>${escape(profile.role)}</b><span>${escape(profile.company)} · A2 migration, H200 → Huawei NPU</span></li>
+            <li><small>${escape(profile.previousRoleYears)}</small><b>${escape(profile.previousRole)}</b><span>AI prototyping · AIOps &amp; MLOps</span></li>
             <li><small>2012 → 2017</small><b>UPSR · PT3 · SPM</b><span>${profile.totalAs} A's in total</span></li>
         </ol>`,
+    projects: () => `
+        <div class="cg-contact">
+            ${profile.projects.map(p => `<div class="cg-contact-row cg-project"><span><b>${escape(p.title)}</b><small>${escape(p.role)}${p.at ? ' · ' + escape(p.at) : ''} · ${escape(p.year)}</small></span></div>`).join('')}
+        </div>`,
     stack: () => `
         <div class="cg-tags">${[ 'Huawei Cloud', 'ModelArts', 'Python', 'PyTorch', 'Kubernetes', 'LLMs & RAG', 'Solution design' ].map(t => `<span>${t}</span>`).join('')}</div>`,
 }
@@ -45,10 +49,13 @@ const intents = [
         text: () => `${profile.name} is a ${profile.role} at ${profile.company}. Born in ${profile.born} (${age()} this year), started as an ${profile.previousRole}, and now designs the cloud platforms that let AI run at scale.`,
         block: 'career' },
     { id: 'work', keys: [ 'job', 'work', 'huawei', 'architect', 'current', 'role', 'position', 'career', 'experience' ],
-        text: () => `Today: ${profile.role} at ${profile.company}, turning business problems into secure, scalable and cost-aware cloud and AI architectures.`,
+        text: () => `Since ${profile.roleSince}: ${profile.role} at ${profile.company}. Before that, ${profile.previousRole} from ${profile.previousRoleYears}.`,
         block: 'career' },
+    { id: 'projects', keys: [ 'project', 'projects', 'migration', 'npu', 'h200', 'a2', 'gpu', 'ascend', 'portfolio', 'built', 'prototype', 'prototyping', 'mlops', 'aiops' ],
+        text: () => `Three highlights. At Huawei, the A2 migration moved AI workloads from NVIDIA H200 GPUs to Huawei NPUs. As an AI Engineer (${profile.previousRoleYears}): AI prototyping, and AIOps / MLOps to keep models running in production.`,
+        block: 'projects' },
     { id: 'ai', keys: [ 'ai', 'engineer', 'machine', 'learning', 'ml', 'model', 'llm', 'genai', 'generative', 'deep', 'rag' ],
-        text: () => `Before architecture came engineering. As an AI Engineer, ${profile.shortName} trained, evaluated and deployed models, which is why the architectures are built for real AI workloads.`,
+        text: () => `From ${profile.previousRoleYears}, ${profile.shortName} worked as an AI Engineer on AI prototyping and AIOps / MLOps, which is why the architectures are built for real AI workloads.`,
         block: 'stack' },
     { id: 'stack', keys: [ 'skill', 'stack', 'tech', 'tools', 'python', 'pytorch', 'cloud', 'kubernetes', 'modelarts' ],
         text: () => `The toolbox, in short:`, block: 'stack' },
@@ -69,7 +76,7 @@ const intents = [
 const prompts = [
     { label: 'Career', text: 'What does Chern Eu do?' },
     { label: 'Grades', text: 'Show me the grades' },
-    { label: 'AI', text: 'Tell me about the AI experience' },
+    { label: 'Projects', text: 'What projects has Chern Eu done?' },
     { label: 'Contact', text: 'How can I get in touch?' },
     { label: 'Secrets', text: 'Any secrets in this world?' },
 ]
