@@ -7,6 +7,7 @@ import { Garage } from './Garage.js'
 import { LiveWeather } from './LiveWeather.js'
 import { LensRain } from './LensRain.js'
 import { Journey } from './Journey.js'
+import { Driver } from './Driver.js'
 import profile from '../../data/profile.js'
 
 /**
@@ -14,6 +15,7 @@ import profile from '../../data/profile.js'
  * - CHEAH-GPT: in-world assistant (press C)
  * - Neural Sky: a living neural network floating above the landing zone
  * - Report card: animated A's counter
+ * - Driver: original character riding out of the sunroof (outfits in the Garage)
  * - Garage: car paints (G)
  * - Live weather: real-time Malaysian weather + local time of day (Open-Meteo)
  * - Journey: passport stamps across the portfolio, fast travel and a reward
@@ -31,6 +33,7 @@ export class Extras
         this.cheahGpt = new CheahGpt()
         this.neuralSky = new NeuralSky()
         this.garage = new Garage()
+        this.driver = new Driver({ glow: this.garage.glow })
         this.lensRain = new LensRain()
         this.setHud()
 
@@ -76,7 +79,15 @@ export class Extras
             text: 'Garage',
             icon: '<svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 17h14M6.5 17l1.6-5.2A2 2 0 0 1 10 10.4h4a2 2 0 0 1 1.9 1.4L17.5 17M4 17v2.5M20 17v2.5M7.5 14h9"/><circle cx="8" cy="17" r="1.6" fill="currentColor"/><circle cx="16" cy="17" r="1.6" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M17 3.5l1 2M20.5 4.5l-1.5 1.5M21 8h-2"/></svg>',
             kbd: 'G',
-            popover: { title: 'Garage', render: (container) => this.garage.render(container) }
+            popover: { title: 'Garage', render: (container) =>
+            {
+                this.garage.render(container)
+                const section = document.createElement('div')
+                section.className = 'dr-section'
+                section.innerHTML = '<p class="hud-eyebrow">Driver</p><div class="dr-body"></div>'
+                container.prepend(section)
+                this.driver.render(section.querySelector('.dr-body'))
+            } }
         })
 
         let weatherRefresh = null

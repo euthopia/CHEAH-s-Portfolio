@@ -1335,3 +1335,60 @@
     .hud *, .jr-toast, .jr-stamp
         animation none !important
         transition none !important
+
+// Driver controls (inside the Garage popover)
+.dr-section
+    padding-bottom 6px
+    margin-bottom 4px
+    border-bottom 1px solid var(--h-line)
+
+    > .hud-eyebrow
+        margin-top 0
+
+.dr-row
+    display flex
+    align-items center
+    gap 10px
+    margin 8px 0
+
+.dr-label
+    flex none
+    width 48px
+    color var(--h-muted)
+    font-size 12px
+
+.dr-chips
+    display flex
+    flex-wrap wrap
+    gap 6px
+
+    button
+        display flex
+        align-items center
+        gap 6px
+        min-height 44px
+        padding 0 10px
+        border 1px solid var(--h-line)
+        border-radius 12px
+        background var(--h-card)
+        font-size 13px
+        cursor pointer
+        transition transform 150ms var(--h-ease), border-color 150ms var(--h-ease)
+
+        &:hover
+            transform translateY(-1px)
+            border-color rgba(11, 12, 14, 0.22)
+
+        &[aria-pressed=true]
+            border-color var(--h-accent)
+            background #e7eaff
+            box-shadow 0 0 0 3px rgba(31, 45, 230, 0.12)
+
+        .gr-chip
+            width 20px
+            height 20px
+            border-radius 6px
+
+.dr-wave
+    width 100%
+    margin-top 4px

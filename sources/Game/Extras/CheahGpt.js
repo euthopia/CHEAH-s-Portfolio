@@ -69,6 +69,8 @@ const intents = [
         text: () => `Based in ${profile.country}.` },
     { id: 'time', keys: [ 'time', 'clock', 'hour', 'now', 'date', 'today' ],
         text: () => { const t = new Intl.DateTimeFormat('en-MY', { hour: 'numeric', minute: '2-digit', weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Asia/Kuala_Lumpur' }).format(new Date()); return `In Malaysia it's ${t}.` } },
+    { id: 'driver', keys: [ 'driver', 'character', 'avatar', 'person', 'guy', 'who drives', 'outfit', 'hair' ],
+        text: () => `That's Chern Eu's avatar riding out of the sunroof. Change the outfit and hair in the Garage (G), honk to get a wave, and hold boost to make the driver cheer.` },
     { id: 'garage', keys: [ 'car', 'paint', 'colour', 'color', 'garage', 'skin' ],
         text: () => `Open the Garage (press G or use the dock at the top) to repaint the car: studio paints, achievement paints, your own two-colour mix, and a secret Passport Gold.` },
     { id: 'weather', keys: [ 'weather', 'rain', 'raining', 'sunny', 'storm', 'temperature', 'hot' ],
