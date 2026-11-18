@@ -9,6 +9,10 @@ export default {
     previousRole: 'AI Engineer',
     country: 'Malaysia',
     linkedin: 'https://my.linkedin.com/in/cheah-chern-eu-48b3ba132',
+    email: 'cheah.c.eu@gmail.com',
+    phone: '018-945 6286',
+    phoneLink: 'tel:+60189456286',
+    whatsapp: 'https://wa.me/60189456286',
     github: 'https://github.com/euthopia',
     education:
     [

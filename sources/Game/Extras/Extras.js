@@ -1,11 +1,12 @@
 import { Game } from '../Game.js'
-import { ChernGpt } from './ChernGpt.js'
+import { CheahGpt } from './CheahGpt.js'
 import { NeuralSky } from './NeuralSky.js'
+import { WorldRebrand } from './WorldRebrand.js'
 import profile from '../../data/profile.js'
 
 /**
  * CHEAH CHERN EU additions on top of the folio engine:
- * - CHERN-GPT: in-world assistant (press C)
+ * - CHEAH-GPT: in-world assistant (press C)
  * - Neural Sky: a living neural network floating above the landing zone
  * - Report card: animated A's counter
  * - Console easter egg: chern.hello()
@@ -16,7 +17,8 @@ export class Extras
     {
         this.game = Game.getInstance()
 
-        this.chernGpt = new ChernGpt()
+        this.worldRebrand = new WorldRebrand()
+        this.cheahGpt = new CheahGpt()
         this.neuralSky = new NeuralSky()
 
         this.setReportCard()
@@ -26,10 +28,16 @@ export class Extras
 
     run(action)
     {
-        if(action === 'chernGpt')
-            this.chernGpt.open()
+        if(action === 'cheahGpt' || action === 'chernGpt')
+            this.cheahGpt.open()
         else if(action === 'reportCard')
             this.openReportCard()
+        else if(action === 'contact')
+            this.cheahGpt.open('How can I get in touch?')
+        else if(action === 'malaysia')
+            this.game.notifications?.show('🇲🇾 Proudly based in Malaysia.', '', 4)
+        else if(action === 'born')
+            this.game.notifications?.show(`🎂 Born in ${profile.born}. Same age as the millennium.`, '', 4)
         else if(action === 'neuralSky')
         {
             this.neuralSky.burst()
@@ -89,7 +97,7 @@ export class Extras
                 return
 
             if(event.code === 'KeyC')
-                this.chernGpt.toggle()
+                this.cheahGpt.toggle()
         })
     }
 
@@ -98,10 +106,10 @@ export class Extras
         window.chern = {
             hello: () =>
             {
-                console.log(`%c👋 Hi! I'm ${profile.name}, ${profile.role} at ${profile.company}.\nLet's connect: ${profile.linkedin}`, 'color:#ff6f91;font:700 14px monospace')
+                console.log(`%c👋 Hi! I'm ${profile.name}, ${profile.role} at ${profile.company}.\nLinkedIn: ${profile.linkedin}\nEmail: ${profile.email} · Phone/WhatsApp: ${profile.phone}`, 'color:#ff6f91;font:700 14px monospace')
                 return '✨'
             },
-            ask: (question) => this.chernGpt.answer(question),
+            ask: (question) => this.cheahGpt.answer(question),
             grades: () => console.table(profile.education),
         }
     }

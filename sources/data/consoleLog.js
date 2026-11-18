@@ -17,10 +17,12 @@ const text = `
 ╔═ Find me ═════════════════════╗
 ║ LinkedIn ⇒ https://my.linkedin.com/in/cheah-chern-eu-48b3ba132
 ║ GitHub   ⇒ https://github.com/euthopia
+║ Email    ⇒ cheah.c.eu@gmail.com
+║ Phone    ⇒ 018-945 6286 (call or WhatsApp)
 ╚═══════════════════════════════╝
 
 ╔═ Secrets ═════════════════════╗
-║ Press [C] in the world to talk to CHERN-GPT, my in-world AI assistant.
+║ Press [C] in the world to talk to CHEAH-GPT, my in-world AI assistant.
 ║ Look up at night: the Neural Sky trains itself while you drive.
 ║ Type  chern.hello()  right here in the console.
 ║ Add #debug to the URL for the debug mode, then [V] toggles the free camera.

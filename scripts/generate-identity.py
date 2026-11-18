@@ -141,7 +141,7 @@ for i, (key, pal, motif, slides) in enumerate(projects):
 
 L = os.path.join(ROOT, 'lab', 'images')
 lab = [
-    ('cheah-chern-gpt', 'ai', 'network', 'CHERN-GPT', 'Ask my in-world AI'),
+    ('cheah-gpt', 'ai', 'network', 'CHEAH-GPT', 'Ask my in-world AI'),
     ('cheah-neural-sky', 'cloud', 'stars', 'Neural Sky', 'Look up while you drive'),
     ('cheah-huawei-cloud', 'huawei', 'clouds', 'Huawei Cloud', 'The platform I architect on'),
     ('cheah-modelarts', 'ai', 'grid', 'ModelArts', 'AI development platform'),

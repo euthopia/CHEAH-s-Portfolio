@@ -230,6 +230,7 @@ export class Objects
     {
         if(
             !object.physical ||
+            object.rebrandHidden ||
             (object.physical.type !== 'dynamic' && object.physical.type !== 'kinematicPositionBased') ||
             object.reseting
         )
