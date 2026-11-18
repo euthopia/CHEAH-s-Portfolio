@@ -175,7 +175,7 @@ export class Game
             ],
             (toLoad, total) =>
             {
-                this.world.intro.updateProgress(1 - toLoad / total)
+                this.world.intro.updateProgress((1 - toLoad / total) * 0.9) // last 10% = shader warm-up
             }
         )
 
@@ -201,9 +201,9 @@ export class Game
         this.overlay = new Overlay()
         this.extras = new Extras()
 
-        // Pre-render if quality high
-        if(this.quality.level === 0 && this.rendering.renderer.backend.isWebGPUBackend)
-            PreRenderer.render()
+        // Compile every shader/pipeline asynchronously while the loader is still up
+        // (the old synchronous cube pre-render froze the main thread for seconds)
+        await PreRenderer.compile()
 
         this.ticker.wait(3, () =>
         {

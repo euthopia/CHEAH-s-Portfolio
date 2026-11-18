@@ -1,17 +1,30 @@
 import * as THREE from 'three/webgpu'
-import { Pane } from 'tweakpane'
-import * as EssentialsPlugin from '@tweakpane/plugin-essentials'
-import * as CamerakitPlugin from '@tweakpane/plugin-camerakit'
 
 export class Debug
 {
+    static libs = null
+
+    // Tweakpane is only needed with #debug: load it on demand so visitors never download it
+    static async preload()
+    {
+        if(!location.hash.match(/debug/i))
+            return
+        const [ { Pane }, EssentialsPlugin, CamerakitPlugin ] = await Promise.all([
+            import('tweakpane'),
+            import('@tweakpane/plugin-essentials'),
+            import('@tweakpane/plugin-camerakit'),
+        ])
+        Debug.libs = { Pane, EssentialsPlugin, CamerakitPlugin }
+    }
+
     constructor()
     {
         
-        this.active = location.hash.match(/debug/i)
+        this.active = location.hash.match(/debug/i) && Debug.libs
 
         if(this.active)
         {
+            const { Pane, EssentialsPlugin, CamerakitPlugin } = Debug.libs
             this.panel = new Pane()
             this.panel.registerPlugin(EssentialsPlugin)
             this.panel.registerPlugin(CamerakitPlugin)

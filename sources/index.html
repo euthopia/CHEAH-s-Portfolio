@@ -35,10 +35,15 @@
     <meta name="apple-mobile-web-app-title" content="CHEAH CHERN EU's" />
     <link rel="manifest" href="./favicons/site.webmanifest" />
 
-    <link rel="preload" href="./respawns/respawnsReferences-compressed.glb" as="fetch" crossorigin>
-    <link rel="preload" href="./behindTheScene/stars.ktx" as="fetch" crossorigin>
-    <link rel="preload" href="./intro/sound.ktx" as="fetch" crossorigin>
-    <link rel="preload" href="./palette.ktx" as="fetch" crossorigin>
+    <link rel="preload" href="./respawns/respawnsReferences-compressed.glb?cb=1" as="fetch" crossorigin>
+    <link rel="preload" href="./behindTheScene/stars.ktx?cb=1" as="fetch" crossorigin>
+    <link rel="preload" href="./intro/sound.ktx?cb=1" as="fetch" crossorigin>
+    <link rel="preload" href="./palette.ktx?cb=1" as="fetch" crossorigin>
+    <!-- Heaviest second-wave assets: start downloading while the JS is parsing -->
+    <link rel="preload" href="./areas/areas-compressed.glb?cb=1" as="fetch" crossorigin>
+    <link rel="preload" href="./terrain/terrain.ktx?cb=1" as="fetch" crossorigin>
+    <link rel="preload" href="./basis/basis_transcoder.wasm" as="fetch" crossorigin>
+    <link rel="preload" href="./draco/draco_decoder.wasm" as="fetch" crossorigin>
     
     <!-- Analytics (only loaded when VITE_ANALYTICS_TAG is set) -->
     <script>

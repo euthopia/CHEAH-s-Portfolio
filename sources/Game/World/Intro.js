@@ -308,6 +308,19 @@ export class Intro
         this.circle.progress = progress
     }
 
+    // Shader warm-up runs after downloads: creep through the last 10% so the loader keeps moving
+    setPreparing(preparing)
+    {
+        clearInterval(this.preparingInterval)
+        if(preparing)
+            this.preparingInterval = setInterval(() =>
+            {
+                this.circle.progress = Math.min(0.98, this.circle.progress + (1 - this.circle.progress) * 0.08)
+            }, 100)
+        else
+            this.circle.progress = 1
+    }
+
     update()
     {
         this.circle.smoothedProgress.value += (this.circle.progress - this.circle.smoothedProgress.value) * this.game.ticker.delta * 10
