@@ -1,4 +1,17 @@
-# Folio 2025
+# CHEAH CHERN EU · 3D Portfolio
+
+Interactive 3D portfolio of **CHEAH CHERN EU**, Cloud & AI Solution Architect at Huawei Malaysia.
+World engine based on [Bruno Simon's folio-2025](https://github.com/brunosimon/folio-2025) (MIT).
+
+## What's custom
+
+- `sources/data/profile.js`: personal info (single source of truth)
+- `sources/data/projects.js`, `lab.js`, `social.js`: areas content
+- `sources/Game/Extras/`: **CHERN-GPT** (in-world assistant, press `C`), **Neural Sky** (living neural network above the landing zone), animated report card
+- `scripts/generate-identity.py`: regenerates career stones, project/lab cards, time-machine screens and share image (`python3 scripts/generate-identity.py`)
+- `static/cv.html`: quick 2D profile for recruiters
+- `.github/workflows/deploy.yml`: builds and deploys to GitHub Pages
+
 
 ![image info](./static/social/share-image.png)
 

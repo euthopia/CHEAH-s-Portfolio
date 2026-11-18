@@ -1,0 +1,204 @@
+// CHERN-GPT + report card additions
+.chern-gpt
+    position fixed
+    inset 0
+    pointer-events none
+    z-index 20
+    font-family 'Nunito', sans-serif
+
+    .chern-gpt-launcher
+        pointer-events auto
+        position absolute
+        top 16px
+        left 50%
+        transform translateX(-50%)
+        display flex
+        align-items center
+        gap 8px
+        padding 8px 14px
+        border-radius 999px
+        border 1px solid rgba(255, 206, 202, 0.5)
+        background rgba(30, 12, 40, 0.65)
+        backdrop-filter blur(8px)
+        color #fff
+        font 700 14px 'Nunito', sans-serif
+        cursor pointer
+        box-shadow 0 0 0 0 rgba(255, 111, 177, 0.6)
+        animation chern-pulse 2.8s infinite
+        transition background 0.2s
+
+        &:hover
+            background rgba(80, 20, 70, 0.85)
+
+        kbd
+            font 700 11px monospace
+            padding 1px 6px
+            border-radius 4px
+            background rgba(255, 255, 255, 0.15)
+
+        @media only screen and (max-width 600px)
+            span, kbd
+                display none
+
+    .chern-gpt-window
+        pointer-events auto
+        position absolute
+        top 64px
+        left 50%
+        width 420px
+        max-width calc(100vw - 32px)
+        height 520px
+        max-height calc(100vh - 120px)
+        display flex
+        flex-direction column
+        border-radius 18px
+        overflow hidden
+        border 1px solid rgba(255, 206, 202, 0.35)
+        background rgba(18, 8, 28, 0.88)
+        backdrop-filter blur(14px)
+        color #fff
+        box-shadow 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(182, 120, 255, 0.25)
+        opacity 0
+        transform translate(-50%, -12px) scale(0.97)
+        visibility hidden
+        transition opacity 0.25s, transform 0.25s, visibility 0.25s
+
+    &.is-open .chern-gpt-window
+        opacity 1
+        transform translate(-50%, 0) scale(1)
+        visibility visible
+
+    .chern-gpt-header
+        display flex
+        align-items center
+        gap 10px
+        padding 12px 14px
+        background linear-gradient(90deg, rgba(182, 120, 255, 0.35), rgba(255, 111, 177, 0.25))
+
+        small
+            font-weight 400
+            opacity 0.7
+            margin-left 6px
+
+    .chern-gpt-title
+        flex 1
+        font-weight 900
+        letter-spacing 0.04em
+
+    .chern-gpt-dot
+        width 10px
+        height 10px
+        border-radius 50%
+        background #6dffb0
+        box-shadow 0 0 10px #6dffb0
+
+    .chern-gpt-close
+        border none
+        background none
+        color #fff
+        font-size 16px
+        cursor pointer
+
+    .chern-gpt-messages
+        flex 1
+        overflow-y auto
+        padding 14px
+        display flex
+        flex-direction column
+        gap 10px
+
+    .chern-gpt-message
+        max-width 85%
+        padding 9px 12px
+        border-radius 14px
+        line-height 1.4
+        font-size 14px
+        white-space pre-wrap
+        word-break break-word
+
+        &.user
+            align-self flex-end
+            background #b678ff
+            border-bottom-right-radius 4px
+
+        &.bot
+            align-self flex-start
+            background rgba(255, 255, 255, 0.1)
+            border-bottom-left-radius 4px
+
+        &.is-typing::after
+            content '● ● ●'
+            letter-spacing 2px
+            opacity 0.6
+            animation chern-blink 1s infinite
+
+    .chern-gpt-suggestions
+        display flex
+        flex-wrap wrap
+        gap 6px
+        padding 0 14px 10px
+
+        button
+            border 1px solid rgba(255, 206, 202, 0.4)
+            background transparent
+            color #ffceca
+            border-radius 999px
+            padding 4px 10px
+            font 700 12px 'Nunito', sans-serif
+            cursor pointer
+
+            &:hover
+                background rgba(255, 206, 202, 0.12)
+
+    .chern-gpt-form
+        display flex
+        gap 8px
+        padding 10px 14px 14px
+
+        input
+            flex 1
+            min-width 0
+            padding 10px 12px
+            border-radius 12px
+            border 1px solid rgba(255, 255, 255, 0.2)
+            background rgba(0, 0, 0, 0.3)
+            color #fff
+            font 400 14px 'Nunito', sans-serif
+            outline none
+
+            &:focus
+                border-color #b678ff
+
+        button
+            border none
+            border-radius 12px
+            padding 0 14px
+            background #ff6fb1
+            color #fff
+            font-size 16px
+            cursor pointer
+
+@keyframes chern-pulse
+    0%
+        box-shadow 0 0 0 0 rgba(255, 111, 177, 0.55)
+    70%
+        box-shadow 0 0 0 14px rgba(255, 111, 177, 0)
+    100%
+        box-shadow 0 0 0 0 rgba(255, 111, 177, 0)
+
+@keyframes chern-blink
+    50%
+        opacity 0.2
+
+.discord.about
+    .about-total
+        text-align center
+        font 900 3.2rem 'Nunito', sans-serif
+        color #ffceca
+        margin -1rem 0 1.5rem
+        text-shadow 0 0 20px rgba(255, 111, 177, 0.6)
+
+    .about-grade
+        font 900 2rem 'Nunito', sans-serif
+        margin 0.2rem 0 0.4rem
+        color #fff

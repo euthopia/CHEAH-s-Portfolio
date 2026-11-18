@@ -465,12 +465,15 @@ export class LabArea extends Area
                 resource = {}
                 resource.loaded = false
 
-                const loader = this.game.resourcesLoader.getLoader('textureKtx')
+                const loader = this.game.resourcesLoader.getLoader(key.endsWith('.ktx') ? 'textureKtx' : 'texture')
 
                 loader.load(
                     path,
                     (loadedTexture) =>
                     {
+                        loadedTexture.colorSpace = THREE.SRGBColorSpace
+                        loadedTexture.flipY = false
+                        loadedTexture.generateMipmaps = false
                         resource.texture = loadedTexture
                         resource.colorSpace = THREE.SRGBColorSpace
                         resource.flipY = false
@@ -721,7 +724,7 @@ export class LabArea extends Area
 
                 gsap.to(this.url.inner.rotation, { x: Math.PI * 2 * rotationDirection, duration: 1, delay: 0, ease: 'back.out(2)', overwrite: true })
 
-                this.url.textCanvas.updateText(this.navigation.current.url.replace(/https?:\/\//, ''))
+                this.url.textCanvas.updateText(this.navigation.current.url ? this.navigation.current.url.replace(/https?:\/\//, '') : `▶ launch ${this.navigation.current.title}`)
 
                 const ratio = this.url.textCanvas.getMeasure().width / this.texts.density
                 this.url.panel.scale.x = ratio + 0.2
@@ -735,6 +738,10 @@ export class LabArea extends Area
             if(this.navigation.current.url)
             {
                 window.open(this.navigation.current.url, '_blank')
+            }
+            else if(this.navigation.current.action)
+            {
+                this.game.extras?.run(this.navigation.current.action)
             }
         }
     }
@@ -838,7 +845,7 @@ export class LabArea extends Area
                         if(mini.startedLoading)
                             return
 
-                        const loader = this.game.resourcesLoader.getLoader('textureKtx')
+                        const loader = this.game.resourcesLoader.getLoader(project.imageMini.endsWith('.ktx') ? 'textureKtx' : 'texture')
 
                         loader.load(
                             `lab/images/${project.imageMini}`,

@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHEAH CHERN EU's</title>
+    <title>CHEAH CHERN EU · Cloud & AI Solution Architect</title>
 
-    <meta name="description" content="CHEAH CHERN EU's creative portfolio">
+    <meta name="description" content="CHEAH CHERN EU — Cloud &amp; AI Solution Architect at Huawei Malaysia. Drive through an interactive 3D world to explore my journey from straight A's to AI engineering and cloud architecture.">
 
     <meta itemprop="name" content="CHEAH CHERN EU">
-    <meta itemprop="description" content="CHEAH CHERN EU's creative portfolio">
-    <meta itemprop="image" content="https://bruno-simon.com/social/share-image.png?cb=a">
+    <meta itemprop="description" content="CHEAH CHERN EU — Cloud &amp; AI Solution Architect at Huawei Malaysia. Drive through an interactive 3D world to explore my journey from straight A's to AI engineering and cloud architecture.">
+    <meta itemprop="image" content="./social/share-image.png?cb=cheah">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CHEAH CHERN EU">
-    <meta name="twitter:description" content="CHEAH CHERN EU's creative portfolio">
-    <meta name="twitter:image" content="https://bruno-simon.com/social/share-image.png?cb=a">
+    <meta name="twitter:description" content="CHEAH CHERN EU — Cloud &amp; AI Solution Architect at Huawei Malaysia. Drive through an interactive 3D world to explore my journey from straight A's to AI engineering and cloud architecture.">
+    <meta name="twitter:image" content="./social/share-image.png?cb=cheah">
 
-    <meta property="og:site_name" content="Three.js Journey">
+    <meta property="og:site_name" content="CHEAH CHERN EU">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bruno-simon.com/">
     <meta property="og:title" content="CHEAH CHERN EU">
-    <meta property="og:description" content="CHEAH CHERN EU's creative portfolio">
-    <meta property="og:image" content="https://bruno-simon.com/social/share-image.png?cb=a">
+    <meta property="og:description" content="CHEAH CHERN EU — Cloud &amp; AI Solution Architect at Huawei Malaysia. Drive through an interactive 3D world to explore my journey from straight A's to AI engineering and cloud architecture.">
+    <meta property="og:image" content="./social/share-image.png?cb=cheah">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,26 +28,32 @@
     
     <link rel="stylesheet" href="./style/index.styl">
 
-    <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" loading="lazy" />
-    <link rel="shortcut icon" href="/favicons/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="./favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="./favicons/favicon.svg" loading="lazy" />
+    <link rel="shortcut icon" href="./favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="CHEAH CHERN EU's" />
-    <link rel="manifest" href="/favicons/site.webmanifest" />
+    <link rel="manifest" href="./favicons/site.webmanifest" />
 
-    <link rel="preload" href="/respawns/respawnsReferences-compressed.glb" as="fetch" crossorigin>
-    <link rel="preload" href="/behindTheScene/stars.ktx" as="fetch" crossorigin>
-    <link rel="preload" href="/intro/sound.ktx" as="fetch" crossorigin>
-    <link rel="preload" href="/palette.ktx" as="fetch" crossorigin>
+    <link rel="preload" href="./respawns/respawnsReferences-compressed.glb" as="fetch" crossorigin>
+    <link rel="preload" href="./behindTheScene/stars.ktx" as="fetch" crossorigin>
+    <link rel="preload" href="./intro/sound.ktx" as="fetch" crossorigin>
+    <link rel="preload" href="./palette.ktx" as="fetch" crossorigin>
     
-    <!-- Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JMSN30BQ5J"></script>
+    <!-- Analytics (only loaded when VITE_ANALYTICS_TAG is set) -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', '%VITE_ANALYTICS_TAG%');
+        (function(){
+            var tag = '%VITE_ANALYTICS_TAG%'
+            if(!tag || tag.indexOf('%') === 0) return
+            var script = document.createElement('script')
+            script.async = true
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + tag
+            document.head.appendChild(script)
+            window.dataLayer = window.dataLayer || []
+            window.gtag = function(){ dataLayer.push(arguments) }
+            gtag('js', new Date())
+            gtag('config', tag)
+        })()
     </script>
 </head>
 <body>
@@ -225,10 +230,10 @@
                         <div class="js-content content home-content">
                             <div class="content-inner">
                                 <div class="title">CHEAH CHERN EU's Home</div>
-                                <p class="text">Welcome!</p>
-                                <p class="text">My name is <strong>CHEAH CHERN EU</strong>, and I'm a <strong>creative developer</strong> (mostly for the web).</p>
-                                <p class="text">This is my portfolio. Please drive around to learn more about me and discover the many secrets of this world.</p>
-                                <p class="text">And don't break anything!</p>
+                                <p class="text">Selamat datang! Welcome!</p>
+                                <p class="text">I'm <strong>CHEAH CHERN EU</strong>, a <strong>Cloud &amp; AI Solution Architect</strong> at <strong>Huawei Malaysia</strong>. Before that I was an <strong>AI Engineer</strong>, turning models into real products.</p>
+                                <p class="text">This world is my portfolio. Drive around to discover my career stones, projects and lab, ask my in-world AI <strong>CHERN-GPT</strong> anything (press <strong>C</strong>), and look up at night to watch the <strong>Neural Sky</strong> learn.</p>
+                                <p class="text">In a hurry? <a href="#" class="js-open-report-card">Open my report card</a> · <a href="https://my.linkedin.com/in/cheah-chern-eu-48b3ba132" target="_blank" rel="noreferrer">LinkedIn</a> · <a href="./cv.html" target="_blank">Quick 2D profile</a></p>
                             </div>
                         </div>
 
@@ -687,34 +692,29 @@
                                     <br />If you are curious about the stack and how I built this project, here’s everything you need to know.
                                 </p>
                                 
-                                <h2 class="title">Three.js</h2>
+                                <h2 class="title">Why a 3D world?</h2>
                                 <p class="text">
-                                    <a href="https://threejs.org" target="_blank" rel="noreferrer">Three.js</a> is the library I’m using to render this 3D world.
-                                    <br />It was created by <strong>mr.doob</strong> (<a href="https://x.com/mrdoob" target="_blank" rel="noreferrer">X</a>, <a href="http://github.com/mrdoob" target="_blank" rel="noreferrer">GitHub</a>), followed by hundreds of awesome developers, one of which being Sunag (<a href="https://x.com/sea3dformat" target="_blank" rel="noreferrer">X</a>, <a href="https://github.com/sunag" target="_blank" rel="noreferrer">GitHub</a>) who added <a href="https://github.com/mrdoob/three.js/wiki/Three.js-Shading-Language" target="_blank" rel="noreferrer">TSL</a>, enabling the use of both WebGL and WebGPU, making this portfolio possible.
+                                    I design systems for a living: clouds, data pipelines and AI platforms. A résumé lists them; a world lets you <em>explore</em> them.
+                                    <br />Every area here is a piece of my story, and every secret is a small engineering experiment.
                                 </p>
-                                
-                                <h2 class="title">Three.js Journey</h2>
+
+                                <h2 class="title">Built on open source</h2>
                                 <p class="text">
-                                    If you want to learn Three.js, I got you covered with this <a href="https://threejs-journey.com" target="_blank" rel="noreferrer">huge course</a>.
-                                    <br />It contains everything you need to start building awesome stuff with Three.js (and much more).
+                                    The world engine is based on <a href="https://github.com/brunosimon/folio-2025" target="_blank" rel="noreferrer">Bruno Simon's folio-2025</a>, released under the <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noreferrer">MIT license</a>, many thanks to him.
+                                    <br />Rendering is powered by <a href="https://threejs.org" target="_blank" rel="noreferrer">Three.js</a> and TSL (WebGPU &amp; WebGL).
                                 </p>
-                                
-                                <h2 class="title">Devlogs</h2>
-                                <p class="text">
-                                    I’ve been making devlogs since the very start of this portfolio and you can find them all on my <a href="https://www.youtube.com/playlist?list=PL5nApUt6Z8sTZxEsEMd8x89OCKCAAfNL0" target="_blank" rel="noreferrer">Youtube channel</a>.
-                                </p>
-                                
-                                <h2 class="title">Source code</h2>
-                                <p class="text">
-                                    The code is available on <a href="https://github.com/brunosimon/folio-2025" target="_blank" rel="noreferrer">GitHub</a> under <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noreferrer">MIT license</a>. Even the Blender files are there, so have fun!
-                                    <br />For security reasons, I’m not sharing the server code, but the portfolio works without it.
-                                </p>
-                                
+
+                                <h2 class="title">What I added</h2>
+                                <ul class="text">
+                                    <li><strong>CHERN-GPT</strong>: an in-world assistant that answers questions about me (press C).</li>
+                                    <li><strong>Neural Sky</strong>: a living neural network that fires above the world, brighter at night.</li>
+                                    <li><strong>Report card</strong>: UPSR, PT3 and SPM, with the 23 A's counted live.</li>
+                                    <li>Career stones, projects and lab rebuilt around my journey in AI &amp; cloud.</li>
+                                </ul>
+
                                 <h2 class="title">Musics</h2>
                                 <p class="text">
-                                    The music you hear was made especially for this portfolio by the awesome Kounine (<a href="https://linktr.ee/Kounine" target="_blank" rel="noreferrer">Linktree</a>).
-                                    <br />They are now under <a href="https://choosealicense.com/licenses/cc0-1.0/" target="_blank" rel="noreferrer">CC0 license</a>, meaning you can do whatever you want with them!
-                                    <br />Download them <a href="https://github.com/brunosimon/folio-2025/tree/main/static/sounds/musics" target="_blank" rel="noreferrer">here</a>.
+                                    Music by Kounine (<a href="https://linktr.ee/Kounine" target="_blank" rel="noreferrer">Linktree</a>), under <a href="https://choosealicense.com/licenses/cc0-1.0/" target="_blank" rel="noreferrer">CC0 license</a>.
                                 </p>
 
                                 <h2 class="title">Some more links</h2>
@@ -815,8 +815,8 @@
                 </div>
             </div>
 
-            <!-- Discord -->
-            <div class="js-modal modal discord" data-name="discord">
+            <!-- About / Report card -->
+            <div class="js-modal modal discord about" data-name="about">
                 <div class="container">
                     <div class="content">
                         <button class="js-close close">
@@ -824,37 +824,41 @@
                             <span class="icon is-xbox">A</span>
                         </button>
 
-                        <div class="title"><img src="ui/discord.svg" loading="lazy"> Discord</div>
+                        <div class="title">🎓 Report card</div>
+
+                        <div class="about-total"><span class="js-about-count">0</span> A's</div>
 
                         <div class="items">
                             <div class="item">
-                                <div class="title-container">
-                                    <div class="line left"></div>
-                                    <div class="title">Public server</div>
-                                    <div class="line right"></div>
-                                </div>
-                                <p>Come hang out with the community<span class="optional">, show us your projects and ask us anything</span>.</p>
-                                <div class="button-container">
-                                    <a href="https://discord.com/channels/769928116701233152/1445064878384480288" target="_blank" rel="noreferrer" class="button">
-                                        Join server
-                                    </a>
-                                </div>
+                                <div class="title-container"><div class="line left"></div><div class="title">UPSR</div><div class="line right"></div></div>
+                                <p class="about-grade">6 A's</p>
+                                <p>Primary school<span class="optional">, where the curiosity started</span>.</p>
                             </div>
                             <div class="item">
-                                <div class="title-container">
-                                    <div class="line left"></div>
-                                    <div class="title">Private messages</div>
-                                    <div class="line right"></div>
-                                </div>
-                                <p>Contact me directly.<span class="optional"><br />I have to warn you, I try to answer everyone, but it might take a while.</span></p>
+                                <div class="title-container"><div class="line left"></div><div class="title">PT3</div><div class="line right"></div></div>
+                                <p class="about-grade">7 A's</p>
+                                <p>Lower secondary.</p>
+                            </div>
+                            <div class="item">
+                                <div class="title-container"><div class="line left"></div><div class="title">SPM</div><div class="line right"></div></div>
+                                <p class="about-grade">10 A's</p>
+                                <p>Upper secondary<span class="optional">, straight A's</span>.</p>
+                            </div>
+                        </div>
+
+                        <div class="items">
+                            <div class="item">
+                                <div class="title-container"><div class="line left"></div><div class="title">Then</div><div class="line right"></div></div>
+                                <p><strong>AI Engineer</strong>: building and shipping machine-learning models.</p>
+                            </div>
+                            <div class="item">
+                                <div class="title-container"><div class="line left"></div><div class="title">Now</div><div class="line right"></div></div>
+                                <p><strong>Cloud &amp; AI Solution Architect</strong> at Huawei Malaysia.</p>
                                 <div class="button-container">
-                                    <a href="https://discord.com/users/202907325722263553" target="_blank" rel="noreferrer" class="button">
-                                        Start chating
-                                    </a>
+                                    <a href="https://my.linkedin.com/in/cheah-chern-eu-48b3ba132" target="_blank" rel="noreferrer" class="button">Connect on LinkedIn</a>
                                 </div>
                             </div>
                         </div>
-                    
                     </div>
                 </div>
             </div>
