@@ -7,6 +7,7 @@ import { Garage } from './Garage.js'
 import { LiveWeather } from './LiveWeather.js'
 import { LensRain } from './LensRain.js'
 import { Journey } from './Journey.js'
+import { WorldClock } from './WorldClock.js'
 import profile from '../../data/profile.js'
 
 /**
@@ -14,6 +15,7 @@ import profile from '../../data/profile.js'
  * - CHEAH-GPT: in-world assistant (press C)
  * - Neural Sky: a living neural network floating above the landing zone
  * - Report card: animated A's counter
+ * - World clock: floating 3D real-time Malaysia clock beside the landing zone
  * - Garage: car paints (G)
  * - Live weather: real-time Malaysian weather + local time of day (Open-Meteo)
  * - Journey: passport stamps across the portfolio, fast travel and a reward
@@ -30,6 +32,7 @@ export class Extras
         this.worldRebrand = new WorldRebrand()
         this.cheahGpt = new CheahGpt()
         this.neuralSky = new NeuralSky()
+        this.worldClock = new WorldClock()
         this.garage = new Garage()
         this.lensRain = new LensRain()
         this.setHud()
