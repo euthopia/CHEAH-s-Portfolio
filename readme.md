@@ -11,6 +11,8 @@ World engine based on [Bruno Simon's folio-2025](https://github.com/brunosimon/f
 - `scripts/generate-identity.py`: regenerates career stones, project/lab cards, time-machine screens and share image (`python3 scripts/generate-identity.py`)
 - `static/cv.html`: quick 2D profile for recruiters
 - `.github/workflows/deploy.yml`: builds and deploys to GitHub Pages
+- `.github/workflows/deploy-cloudflare.yml`: builds and deploys to Cloudflare Pages (`cheah-chern-eu.pages.dev`); needs the `CLOUDFLARE_API_TOKEN` repository secret
+- `npm run deploy:cloudflare`: manual deploy with Wrangler (needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`)
 
 
 ![image info](./static/social/share-image.png)
