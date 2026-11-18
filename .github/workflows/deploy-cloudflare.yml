@@ -1,8 +1,8 @@
 name: Deploy portfolio to Cloudflare Pages
 
+# Manual only for now (GitHub Pages is the active host).
+# To enable automatic deploys: add the CLOUDFLARE_API_TOKEN secret and restore the push trigger.
 on:
-  push:
-    branches: [ main, claude/dreamy-volta-u489fx ]
   workflow_dispatch:
 
 permissions:
