@@ -7,7 +7,7 @@ World engine based on [Bruno Simon's folio-2025](https://github.com/brunosimon/f
 
 - `sources/data/profile.js`: personal info (single source of truth)
 - `sources/data/projects.js`, `lab.js`, `social.js`: areas content
-- `sources/Game/Extras/`: **CHEAH-GPT** (in-world assistant, press `C`), **Neural Sky** (living neural network above the landing zone), animated report card
+- `sources/Game/Extras/`: **CHEAH-GPT** (in-world assistant, press `C`), **Garage** car paints (`G`), **Live weather** (real-time Malaysian weather via Open-Meteo with wttr.in fallback, Malaysia time of day, lens raindrops), **Journey** passport with fast travel and a secret paint, **Neural Sky**, animated report card
 - `scripts/generate-identity.py`: regenerates career stones, project/lab cards, time-machine screens and share image (`python3 scripts/generate-identity.py`)
 - `static/cv.html`: quick 2D profile for recruiters
 - `.github/workflows/deploy.yml`: builds and deploys to GitHub Pages
