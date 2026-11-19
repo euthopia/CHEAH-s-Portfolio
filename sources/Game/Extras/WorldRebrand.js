@@ -4,13 +4,13 @@ import { glyphGeometry, firstUv } from './glyphs.js'
 
 /**
  * Replaces the original author's personal elements baked into the 3D world:
- * - Landing letters "BRUNO SIMON" -> "CHEAH CHERN"
+ * - Landing letters "BRUNO SIMON" -> "CHEAH CHERN EU" (10 original blocks + 2 spawned)
  * - Social area: personal logos, statue and OnlyFans logo -> CHEAH CHERN EU pedestal items + statue
  * - Circuit: THREE.JS banner and logo -> CHEAH CHERN EU banner and CCE monogram
  */
 export class WorldRebrand
 {
-    static LANDING_TEXT = [ 'CHEAH', 'CHERN' ]
+    static LANDING_TEXT = [ 'CHEAH', 'CHERN', 'EU' ]
 
     // Order of the 8 pedestals in the social area (as baked in the model)
     static SOCIAL_HIDE = [ 'x', 'bluesky', 'youtube', 'mail', 'twitch', 'discord', 'onlyfans', 'boy', 'baguira', 'sudo', 'refStatue' ]
@@ -59,59 +59,102 @@ export class WorldRebrand
             .map(reference => reference.userData.object)
             .filter(object => object?.visual && object?.physical)
             .sort((a, b) => a.physical.initialState.position.x - b.physical.initialState.position.x)
-
-        const chars = WorldRebrand.LANDING_TEXT.join('').split('')
-        if(letters.length !== chars.length)
+        if(!letters.length)
             return
 
-        // Line along which letters are laid out
+        const words = WorldRebrand.LANDING_TEXT
+        const chars = words.join('').split('')
+
+        // Line along which letters are laid out (centered where the original name was)
         const first = new THREE.Vector3().copy(letters[0].physical.initialState.position)
         const last = new THREE.Vector3().copy(letters[letters.length - 1].physical.initialState.position)
         const middle = first.clone().lerp(last, 0.5)
         const direction = last.clone().sub(first).setY(0).normalize()
+        const baseY = letters[0].physical.initialState.position.y
+        const r = letters[0].physical.initialState.rotation
+        const rotation = new THREE.Quaternion(r.x, r.y, r.z, r.w)
 
-        const height = 1.45
-        const depth = 0.46
-        const gap = 0.12
-        const wordGap = 0.7
+        // Slightly smaller than the original so three words fit in about the same length
+        const height = 1.3
+        const depth = 0.44
+        const gap = 0.1
+        const wordGap = 0.6
 
-        // Build geometries and measure widths
-        const items = letters.map((object, index) =>
+        const sourceMesh = this.meshOf(letters[0].visual.object3D)
+        const uv = firstUv(sourceMesh.geometry)
+        const items = chars.map((char) =>
         {
-            const mesh = this.meshOf(object.visual.object3D)
-            const geometry = glyphGeometry(chars[index], { height, depth, uv: firstUv(mesh.geometry) })
-            const width = geometry.boundingBox.max.x - geometry.boundingBox.min.x
-            return { object, mesh, geometry, width }
+            const geometry = glyphGeometry(char, { height, depth, uv })
+            return { char, geometry, width: geometry.boundingBox.max.x - geometry.boundingBox.min.x }
         })
 
-        const firstWordLength = WorldRebrand.LANDING_TEXT[0].length
-        let total = items.reduce((sum, item) => sum + item.width, 0) + gap * (items.length - 2) + wordGap
+        // Word ends get the larger gap
+        const wordEnds = new Set()
+        let count = 0
+        for(const word of words)
+        {
+            count += word.length
+            wordEnds.add(count - 1)
+        }
+        const total = items.reduce((sum, item, index) => sum + item.width + (index < items.length - 1 ? (wordEnds.has(index) ? wordGap : gap) : 0), 0)
         let cursor = - total / 2
 
         items.forEach((item, index) =>
         {
-            const { object, mesh, geometry, width } = item
-
-            // Visual
-            mesh.geometry = geometry
-
-            // Collider
-            const collider = object.physical.colliders[0]
-            if(collider?.setHalfExtents)
-                collider.setHalfExtents({ x: width / 2, y: height / 2, z: depth / 2 })
-            for(let i = 1; i < object.physical.colliders.length; i++)
-                object.physical.colliders[i].setEnabled(false)
-
-            // Position along the line
-            const center = cursor + width / 2
-            cursor += width + (index === firstWordLength - 1 ? wordGap : gap)
+            const center = cursor + item.width / 2
+            cursor += item.width + (wordEnds.has(index) ? wordGap : gap)
             const position = middle.clone().addScaledVector(direction, center)
-            position.y = object.physical.initialState.position.y
+            position.y = baseY
 
-            object.physical.body.setTranslation(position, true)
-            object.physical.initialState.position = { x: position.x, y: position.y, z: position.z }
-            object.visual.object3D.position.copy(position)
-            object.needsUpdate = true
+            const object = letters[index]
+            if(object)
+            {
+                // Reuse an original physics letter
+                const mesh = this.meshOf(object.visual.object3D)
+                mesh.geometry = item.geometry
+                const collider = object.physical.colliders[0]
+                if(collider?.setHalfExtents)
+                    collider.setHalfExtents({ x: item.width / 2, y: height / 2, z: depth / 2 })
+                for(let i = 1; i < object.physical.colliders.length; i++)
+                    object.physical.colliders[i].setEnabled(false)
+
+                object.physical.body.setTranslation(position, true)
+                object.physical.initialState.position = { x: position.x, y: position.y, z: position.z }
+                object.visual.object3D.position.copy(position)
+                object.needsUpdate = true
+            }
+            else
+            {
+                // Spawn an extra letter with the same look and physics
+                const mesh = new THREE.Mesh(item.geometry, sourceMesh.material)
+                mesh.castShadow = true
+                mesh.receiveShadow = true
+                mesh.position.copy(position)
+                mesh.quaternion.copy(rotation)
+                const extra = this.game.objects.add(
+                    { model: mesh, parent: this.game.scene, castShadow: true, receiveShadow: true },
+                    {
+                        type: 'dynamic',
+                        position,
+                        rotation,
+                        sleeping: true,
+                        mass: 0.2,
+                        colliders: [ {
+                            shape: 'cuboid',
+                            parameters: [ item.width / 2, height / 2, depth / 2 ],
+                            position: new THREE.Vector3(),
+                            quaternion: new THREE.Quaternion()
+                        } ]
+                    }
+                )
+                const physical = extra?.physical
+                if(physical?.colliders?.[0]?.setActiveEvents)
+                {
+                    physical.colliders[0].setActiveEvents(this.game.RAPIER.ActiveEvents.CONTACT_FORCE_EVENTS)
+                    physical.colliders[0].setContactForceEventThreshold(5)
+                    physical.onCollision = (force, contact) => this.game.audio.groups.get('hitBrick')?.playRandomNext(force, contact)
+                }
+            }
         })
     }
 
