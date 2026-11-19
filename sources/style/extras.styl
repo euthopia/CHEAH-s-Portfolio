@@ -1392,3 +1392,24 @@
 .dr-wave
     width 100%
     margin-top 4px
+
+// Touch devices (phones/tablets): backdrop blur over a live WebGL canvas is re-computed every
+// frame and is very expensive on iOS Safari, so use solid translucent surfaces instead
+no-blur()
+    .hud-dock, .hud-pop, .hud-pop-head, .jr-toast, .cg .cg-panel, .cg .cg-launcher
+        backdrop-filter none !important
+
+    .hud-dock
+        background rgba(238, 240, 243, 0.97) !important
+
+    .hud-pop, .hud-pop-head, .cg .cg-panel
+        background #eef0f3 !important
+
+    .jr-toast
+        background #0b0c0e !important
+
+@media (hover: none), (pointer: coarse)
+    no-blur()
+
+html.is-mobile-device
+    no-blur()

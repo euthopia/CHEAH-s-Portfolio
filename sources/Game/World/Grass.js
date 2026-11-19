@@ -9,7 +9,7 @@ export class Grass
     {
         this.game = Game.getInstance()
 
-        this.subdivisions = 280
+        this.subdivisions = this.game.quality.level === 0 ? 280 : 200 // ~half the blades on low quality (phones)
         const halfExtent = this.game.view.optimalArea.radius
         this.size = halfExtent * 2
         this.count = this.subdivisions * this.subdivisions

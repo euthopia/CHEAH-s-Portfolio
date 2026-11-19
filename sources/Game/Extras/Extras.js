@@ -9,6 +9,7 @@ import { LensRain } from './LensRain.js'
 import { Journey } from './Journey.js'
 import { Driver } from './Driver.js'
 import { Nitro } from './Nitro.js'
+import { Performance } from './Performance.js'
 import profile from '../../data/profile.js'
 
 /**
@@ -31,6 +32,7 @@ export class Extras
     {
         this.game = Game.getInstance()
 
+        this.performance = new Performance()
         this.worldRebrand = new WorldRebrand()
         this.cheahGpt = new CheahGpt()
         this.neuralSky = new NeuralSky()

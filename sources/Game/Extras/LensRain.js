@@ -24,7 +24,7 @@ export class LensRain
 
     resize()
     {
-        const ratio = Math.min(window.devicePixelRatio || 1, 1.5)
+        const ratio = this.game.viewport?.isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5)
         this.ratio = ratio
         this.canvas.width = innerWidth * ratio
         this.canvas.height = innerHeight * ratio
@@ -69,7 +69,7 @@ export class LensRain
         while(this.spawnBudget >= 1)
         {
             this.spawnBudget -= 1
-            if(this.drops.length < 140) this.spawn()
+            if(this.drops.length < (this.game.viewport?.isMobile ? 60 : 140)) this.spawn()
         }
 
         const ctx = this.context
