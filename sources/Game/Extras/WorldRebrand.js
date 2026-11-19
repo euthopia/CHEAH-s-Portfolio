@@ -6,6 +6,7 @@ import { glyphGeometry, firstUv } from './glyphs.js'
  * Replaces the original author's personal elements baked into the 3D world:
  * - Landing letters "BRUNO SIMON" -> "CHEAH CHERN"
  * - Social area: personal logos, statue and OnlyFans logo -> CHEAH CHERN EU pedestal items + statue
+ * - Circuit: THREE.JS banner and logo -> CHEAH CHERN EU banner and CCE monogram
  */
 export class WorldRebrand
 {
@@ -22,6 +23,7 @@ export class WorldRebrand
 
         this.safe(() => this.setLandingLetters())
         this.safe(() => this.setSocial())
+        this.safe(() => this.setCircuitBranding())
     }
 
     safe(callback)
@@ -150,6 +152,86 @@ export class WorldRebrand
             if(object)
                 this.hide(object)
         }
+    }
+
+    // Replace a baked texture by swapping the material on every mesh that uses it
+    swapMaterialTexture(materialName, canvas)
+    {
+        const current = this.game.materials.list?.get(materialName)
+        if(!current)
+            return
+        const map = new THREE.CanvasTexture(canvas)
+        map.colorSpace = THREE.SRGBColorSpace
+        map.flipY = false
+        map.anisotropy = 4
+        const replacement = this.game.materials.createFromMaterial(new THREE.MeshStandardMaterial({ map, name: `${materialName}Cheah` }))
+        this.game.scene.traverse((child) =>
+        {
+            if(child.isMesh && child.material === current)
+                child.material = replacement
+        })
+        this.game.materials.list.set(materialName, replacement)
+    }
+
+    setCircuitBranding()
+    {
+        const font = (weight, size) => `${weight} ${size}px "Host Grotesk", "Nunito", system-ui, sans-serif`
+        const ground = '#45392f'
+        const accent = '#d39bff'
+
+        // Banner 512x128: monogram + name with racing stripes (same layout as the original)
+        const banner = document.createElement('canvas')
+        banner.width = 512
+        banner.height = 128
+        let ctx = banner.getContext('2d')
+        ctx.fillStyle = ground
+        ctx.fillRect(0, 0, 512, 128)
+        ctx.fillStyle = accent
+        for(const [ x, y, w ] of [ [ 120, 12, 150 ], [ 360, 12, 110 ], [ 300, 106, 170 ], [ 120, 106, 90 ] ])
+        {
+            ctx.beginPath()
+            ctx.moveTo(x + 8, y)
+            ctx.lineTo(x + w + 8, y)
+            ctx.lineTo(x + w, y + 10)
+            ctx.lineTo(x, y + 10)
+            ctx.fill()
+        }
+        ctx.fillStyle = '#ffffff'
+        ctx.font = font(800, 44)
+        ctx.textBaseline = 'middle'
+        ctx.save()
+        ctx.transform(1, 0, -0.18, 1, 0, 0)
+        ctx.fillText('CHEAH CHERN EU', 120, 64)
+        ctx.restore()
+        ctx.strokeStyle = '#ffffff'
+        ctx.lineWidth = 6
+        ctx.beginPath()
+        ctx.arc(60, 64, 34, Math.PI * 0.25, Math.PI * 1.75)
+        ctx.stroke()
+        ctx.font = font(800, 26)
+        ctx.textAlign = 'center'
+        ctx.fillStyle = '#ffffff'
+        ctx.fillText('CCE', 62, 65)
+        this.swapMaterialTexture('circuitBrand', banner)
+
+        // Logo 128x128: CCE monogram
+        const logo = document.createElement('canvas')
+        logo.width = 128
+        logo.height = 128
+        ctx = logo.getContext('2d')
+        ctx.fillStyle = ground
+        ctx.fillRect(0, 0, 128, 128)
+        ctx.strokeStyle = '#ffffff'
+        ctx.lineWidth = 8
+        ctx.beginPath()
+        ctx.arc(64, 64, 44, Math.PI * 0.25, Math.PI * 1.75)
+        ctx.stroke()
+        ctx.fillStyle = accent
+        ctx.font = font(800, 34)
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('CCE', 66, 66)
+        this.swapMaterialTexture('circuitThreejs', logo)
     }
 
     spawnWord(text, original, sourceMesh, height = 0.8, depth = 0.25)

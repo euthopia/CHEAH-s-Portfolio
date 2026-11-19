@@ -170,3 +170,50 @@ def screen(name, top, big, bottom, bg, fg):
 
 screen('timeMachineScreenFolio', 'UPSR · PT3 · SPM', '23A', 'BACK TO 2012', (30, 70, 50), (190, 255, 170))
 screen('timeMachineScreenMGS', 'NOW PLAYING', '2026', 'HUAWEI · CLOUD & AI', (60, 10, 20), (255, 170, 160))
+
+# ---------------------------------------------------------------- Menu preview: Options (replaces the original-author letters)
+def options_preview():
+    W = H = 600
+    img = Image.new('RGB', (W, H), (26, 18, 40))
+    d = ImageDraw.Draw(img, 'RGBA')
+    rnd = random.Random(42)
+    # Dusky ground with a soft path and grass tufts
+    for y in range(H):
+        t = y / H
+        d.line([(0, y), (W, y)], fill=(int(30 + 25 * t), int(20 + 12 * t), int(46 + 10 * t)))
+    d.polygon([(0, 420), (600, 250), (600, 330), (0, 520)], fill=(52, 38, 70))
+    for _ in range(260):
+        x, y = rnd.randint(0, W), rnd.randint(0, H)
+        r = rnd.randint(2, 5)
+        d.ellipse([x - r, y - r, x + r, y + r], fill=(rnd.randint(150, 230), rnd.randint(60, 120), rnd.randint(150, 220), rnd.randint(20, 70)))
+    for _ in range(40):
+        x, y = rnd.randint(0, W), rnd.randint(0, H)
+        d.polygon([(x, y), (x + 6, y - 22), (x + 12, y)], fill=(120, 70, 150, 160))
+    # Tilted extruded letters
+    layer = Image.new('RGBA', (1100, 300), (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    f = font('black', 120)
+    text = 'CHEAH CHERN'
+    for depth in range(14, 0, -1):
+        ld.text((40 + depth * 0.6, 70 + depth), text, font=f, fill=(150, 60, 140, 255))
+    ld.text((40, 70), text, font=f, fill=(246, 150, 220, 255))
+    ld.text((40, 70), text, font=f, fill=None, stroke_width=0)
+    layer = layer.rotate(17, resample=Image.BICUBIC, expand=True)
+    layer = layer.resize((int(layer.width * 0.55), int(layer.height * 0.55)), Image.LANCZOS)
+    img.paste(layer, (W // 2 - layer.width // 2, H // 2 - layer.height // 2 + 20), layer)
+    # A few tumbling bricks and a bench for scale
+    for x, y, rot in [(420, 470, 15), (470, 500, -10), (110, 160, 30)]:
+        brick = Image.new('RGBA', (60, 34), (220, 160, 230, 255))
+        bd = ImageDraw.Draw(brick)
+        bd.rectangle([0, 24, 60, 34], fill=(170, 110, 190, 255))
+        brick = brick.rotate(rot, expand=True)
+        img.paste(brick, (x, y), brick)
+    d = ImageDraw.Draw(img, 'RGBA')
+    d.rectangle([120, 470, 220, 482], fill=(110, 70, 60))
+    d.rectangle([125, 482, 133, 505], fill=(80, 50, 45))
+    d.rectangle([207, 482, 215, 505], fill=(80, 50, 45))
+    img = img.filter(ImageFilter.GaussianBlur(0.6))
+    img.save(os.path.join(ROOT, 'ui', 'previews', 'options.png'))
+    img.save(os.path.join(ROOT, 'ui', 'previews', 'options.webp'), quality=82)
+
+options_preview()

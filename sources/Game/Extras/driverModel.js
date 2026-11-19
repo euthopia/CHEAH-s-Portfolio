@@ -39,7 +39,15 @@ export function buildDriver({ THREE, RoundedBoxGeometry, material })
     const chestY = 0.2
     mesh(box(0.3, 0.5, 0.46, 0.08, 3), 'shirt', torso, 0, chestY, 0)
     // White tee showing through the open shirt
-    mesh(box(0.03, 0.26, 0.1, 0.02), 'tee', torso, 0.145, chestY + 0.09, 0)
+    // V-neck gap of the open shirt showing the tee
+    const vNeck = new THREE.Shape()
+    vNeck.moveTo(-0.06, 0.12)
+    vNeck.lineTo(0.06, 0.12)
+    vNeck.lineTo(0.018, -0.1)
+    vNeck.lineTo(-0.018, -0.1)
+    vNeck.closePath()
+    const tee = mesh(new THREE.ExtrudeGeometry(vNeck, { depth: 0.02, bevelEnabled: false }), 'tee', torso, 0.142, chestY + 0.12, 0)
+    tee.rotation.y = Math.PI / 2
     // Shirt pattern stripes (floral-style blocks) on both front panels
     for(const side of [ -1, 1 ])
         for(let i = 0; i < 3; i++)
@@ -93,20 +101,36 @@ export function buildDriver({ THREE, RoundedBoxGeometry, material })
     for(const group of Object.values(hair))
         head.add(group)
 
-    // Arms: shoulder → upper arm → elbow → forearm → hand
+    // Arms: shoulder (sleeve) → upper arm → elbow → forearm → wrist → cartoon hand
     const arm = (side) =>
     {
         const shoulder = new THREE.Group()
-        shoulder.position.set(0, chestY + 0.18, side * 0.27)
+        shoulder.position.set(0, chestY + 0.17, side * 0.255)
         torso.add(shoulder)
-        mesh(new THREE.SphereGeometry(0.085, 10, 8), 'shirt', shoulder)
-        const upper = mesh(new THREE.CapsuleGeometry(0.06, 0.18, 4, 8), 'shirt', shoulder, 0, -0.13, 0)
+
+        // Short sleeve, slightly flared
+        mesh(new THREE.SphereGeometry(0.082, 12, 10), 'shirt', shoulder)
+        mesh(new THREE.CylinderGeometry(0.078, 0.088, 0.13, 12), 'shirt', shoulder, 0, -0.06, 0)
+        mesh(new THREE.CylinderGeometry(0.05, 0.052, 0.14, 10), 'skin', shoulder, 0, -0.17, 0)
+
         const elbow = new THREE.Group()
-        elbow.position.set(0, -0.26, 0)
+        elbow.position.set(0, -0.245, 0)
         shoulder.add(elbow)
-        mesh(new THREE.CapsuleGeometry(0.05, 0.16, 4, 8), 'skin', elbow, 0, -0.1, 0)
-        mesh(box(0.08, 0.09, 0.07, 0.03, 1), 'skin', elbow, 0, -0.22, 0)
-        return { shoulder, upper, elbow }
+        mesh(new THREE.SphereGeometry(0.05, 10, 8), 'skin', elbow)
+        mesh(new THREE.CylinderGeometry(0.046, 0.04, 0.2, 10), 'skin', elbow, 0, -0.1, 0)
+
+        // Hand: palm + finger block + thumb, slightly cupped
+        const wrist = new THREE.Group()
+        wrist.position.set(0, -0.205, 0)
+        elbow.add(wrist)
+        const hand = new THREE.Group()
+        wrist.add(hand)
+        mesh(box(0.05, 0.075, 0.085, 0.022, 2), 'skin', hand, 0, -0.035, 0)
+        const fingers = mesh(box(0.045, 0.06, 0.082, 0.02, 2), 'skin', hand, 0.012, -0.09, 0)
+        fingers.rotation.z = 0.35
+        const thumb = mesh(new THREE.CapsuleGeometry(0.016, 0.035, 3, 6), 'skin', hand, 0.03, -0.035, -side * 0.035)
+        thumb.rotation.set(-side * 0.5, 0, 0.7)
+        return { shoulder, elbow, wrist, hand }
     }
     const arms = { left: arm(-1), right: arm(1) }
 
@@ -151,26 +175,33 @@ export function buildDriver({ THREE, RoundedBoxGeometry, material })
         head.rotation.x = -pose.lean * 0.5
         head.rotation.z = pose.cheer * 0.15
 
-        // Rest: forearms on the roof. Cheer: both arms up. Wave: right arm up, forearm swinging.
-        const rest = { shoulderZ: 0.95, elbowZ: 0.75 }
-        const wavePhase = Math.sin(t * 9) * 0.5
+        // Rest: elbows out, forearms resting forward on the roof rim, palms flat
+        // Cheer: both arms up. Wave: right arm up, forearm swinging from the elbow.
+        const wavePhase = Math.sin(t * 9) * 0.55
+        const restShoulder = { x: 0.32, z: 0.55 } // out + forward
+        const restElbow = { x: -0.15, z: 1.25 }   // bend forward, slightly inward
+        const restWrist = { z: -0.55 }            // keep the palm flat on the roof
 
-        // Left arm (−Z side)
-        arms.left.shoulder.rotation.set(
-            pose.cheer * 2.7 + pose.lean * 0.3,
-            0,
-            rest.shoulderZ * (1 - pose.cheer)
-        )
-        arms.left.elbow.rotation.set(pose.cheer * 0.3, 0, rest.elbowZ * (1 - pose.cheer))
+        const setArm = (a, side, up, waving) =>
+        {
+            // Rotation about X lifts the arm sideways: negative = toward +Z (right side)
+            const out = -side * restShoulder.x
+            a.shoulder.rotation.set(
+                (out + pose.lean * 0.25) * (1 - up) - side * up * 2.75,
+                0,
+                restShoulder.z * (1 - up) + up * 0.15
+            )
+            a.elbow.rotation.set(
+                (-side * restElbow.x) * (1 - up) + waving * wavePhase,
+                0,
+                restElbow.z * (1 - up) + up * (0.25 + waving * 0.35)
+            )
+            a.wrist.rotation.set(0, 0, restWrist.z * (1 - up) + waving * 0.2)
+        }
 
-        // Right arm (+Z side)
-        const up = Math.max(pose.cheer, pose.wave)
-        arms.right.shoulder.rotation.set(
-            -up * 2.7 + pose.lean * 0.3,
-            0,
-            rest.shoulderZ * (1 - up)
-        )
-        arms.right.elbow.rotation.set(-pose.cheer * 0.3 + pose.wave * wavePhase, 0, rest.elbowZ * (1 - up) + pose.wave * 0.4)
+        const right = Math.max(pose.cheer, pose.wave)
+        setArm(arms.left, -1, pose.cheer, 0)
+        setArm(arms.right, 1, right, pose.wave)
     }
 
     animate({ t: 0, dt: 1 })

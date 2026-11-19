@@ -8,6 +8,7 @@ import { LiveWeather } from './LiveWeather.js'
 import { LensRain } from './LensRain.js'
 import { Journey } from './Journey.js'
 import { Driver } from './Driver.js'
+import { Nitro } from './Nitro.js'
 import profile from '../../data/profile.js'
 
 /**
@@ -16,6 +17,7 @@ import profile from '../../data/profile.js'
  * - Neural Sky: a living neural network floating above the landing zone
  * - Report card: animated A's counter
  * - Driver: original character riding out of the sunroof (outfits in the Garage)
+ * - Nitro: quad exhausts with idle, boost and backfire flames (Konami → rainbow nitro)
  * - Garage: car paints (G)
  * - Live weather: real-time Malaysian weather + local time of day (Open-Meteo)
  * - Journey: passport stamps across the portfolio, fast travel and a reward
@@ -34,6 +36,7 @@ export class Extras
         this.neuralSky = new NeuralSky()
         this.garage = new Garage()
         this.driver = new Driver({ glow: this.garage.glow })
+        this.nitro = new Nitro()
         this.lensRain = new LensRain()
         this.setHud()
 

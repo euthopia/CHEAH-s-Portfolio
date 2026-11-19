@@ -1,6 +1,5 @@
 import * as THREE from 'three/webgpu'
 import { Game } from './Game.js'
-import { VisualVehicle } from './World/VisualVehicle.js'
 
 export class KonamiCode
 {
@@ -49,19 +48,10 @@ export class KonamiCode
         document.addEventListener('keydown', callback)
     }
 
-    async activate()
+    activate()
     {
-        const files = [
-            'vehicle/oldSchool.glb',
-            'vehicle/default.glb'
-        ]
-        
-        const resources = await this.game.resourcesLoader.load([
-            [ 'vehicle', `${files[this.activationCount % 2]}?cb=${this.activationCount}`, 'gltf' ],
-        ])
-            
-        this.game.world.visualVehicle.destroy()
-        this.game.world.visualVehicle = new VisualVehicle(resources.vehicle.scene)
+        // Rainbow nitro instead of swapping the vehicle model
+        this.game.extras?.nitro?.rainbowMode(20)
 
         if(this.game.world.confetti)
         {
