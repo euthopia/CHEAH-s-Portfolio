@@ -21,7 +21,10 @@ export class Viewport
         this.ratio = this.width / this.height
 
         this.pixelRatioPure = window.devicePixelRatio
-        this.pixelRatioMax = 2
+        // Phones: 3x screens at 2x resolution are too heavy for the post-processing chain
+        this.isMobile ??= /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent))
+        this.pixelRatioMax ??= this.isMobile ? 1.5 : 2
+        document.documentElement.classList.toggle('is-mobile-device', this.isMobile)
         this.pixelRatio = Math.min(this.pixelRatioPure, this.pixelRatioMax)
     }
 

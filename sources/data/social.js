@@ -1,10 +1,13 @@
+import profile from './profile.js'
+
+// slot = pedestal index in the social area (0 → 7, right to left)
 export default [
-    { name: 'X', url: 'https://x.com/bruno_simon', align: 'right' },
-    { name: 'Bluesky', url: 'https://bsky.app/profile/bruno-simon.bsky.social', align: 'right' },
-    { name: 'Youtube', url: 'https://www.youtube.com/@BrunoSimon', align: 'right' },
-    { name: 'Mail', url: 'mailto:simon.bruno.77@gmail.com', align: 'right' },
-    { name: 'Twitch', url: 'https://www.twitch.tv/bruno_simon_dev', align: 'right' },
-    { name: 'GitHub', url: 'https://github.com/brunosimon', align: 'right' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/simonbruno77/', align: 'left' },
-    { name: 'Discord', modal: 'discord', align: 'left' },
+    { slot: 0, name: 'Quick profile', url: './cv.html', align: 'right' },
+    { slot: 1, name: 'CHEAH-GPT', action: 'cheahGpt', align: 'right' },
+    { slot: 2, name: 'Report card', modal: 'about', align: 'right' },
+    { slot: 3, name: 'Contact me', action: 'contact', align: 'right' },
+    { slot: 4, name: 'Since 2000', action: 'born', align: 'right' },
+    { slot: 5, name: 'GitHub', url: profile.github, align: 'right' },
+    { slot: 6, name: 'LinkedIn', url: profile.linkedin, align: 'left' },
+    { slot: 7, name: 'Neural Sky', action: 'neuralSky', align: 'left' },
 ]

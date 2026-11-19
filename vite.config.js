@@ -9,6 +9,11 @@ export default {
     envDir: '../',  // Directory where the env file is located
     publicDir: '../static/', // Path from "root" to static assets (files that are served as they are)
     base: './', // Public path (what's after the domain)
+    resolve:
+    {
+        // three/examples import 'three': point them at the WebGPU build so Three.js is bundled once
+        alias: [ { find: /^three$/, replacement: 'three/webgpu' } ]
+    },
     server:
     {
         // https: true,
@@ -25,7 +30,7 @@ export default {
     [
         wasm(),
         restart({ restart: [ '../static/**', ] }), // Restart server on static file change
-        nodePolyfills(),
+        nodePolyfills({ include: [ 'buffer' ], globals: { Buffer: true, global: true, process: false } }), // only Buffer (msgpack-lite)
         // basicSsl()
     ]
 }

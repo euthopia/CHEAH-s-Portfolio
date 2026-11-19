@@ -31,6 +31,23 @@ export class Audio
         this.setAmbiants()
         this.setOneOffs()
 
+        // Sounds registered before the first interaction were deferred (no downloads during
+        // the loading screen): fetch them now, a few at a time, so they don't flood the network
+        const deferred = []
+        this.groups.forEach(group => group.items.forEach(item => { if(item.deferredPreload && !item.loaded) deferred.push(item) }))
+        const loadNext = () =>
+        {
+            const batch = deferred.splice(0, 4)
+            for(const item of batch)
+            {
+                item.loaded = true
+                item.howl.load()
+            }
+            if(deferred.length)
+                setTimeout(loadNext, 250)
+        }
+        loadNext()
+
         // Play all autoplays that didn't start because not initated
         this.groups.forEach((group, name) =>
         {
@@ -72,13 +89,16 @@ export class Audio
         }
 
         const item = {}
+        // Audio can't play before the first interaction anyway: defer downloads until init()
+        const wantsPreload = options.preload ?? true
+        const preload = wantsPreload && this.initiated
         item.howl = new Howl({
             src: [ options.path ],
             pool: 2,
             autoplay: (this.initiated && options.autoplay) ?? false,
             loop: options.loop ?? false,
             volume: options.volume ?? 0.5,
-            preload: options.preload ?? true,
+            preload,
             onloaderror: () =>
             {
                 console.error(`Audio > Load error > ${options.path}`, options)
@@ -98,7 +118,8 @@ export class Audio
         item.lastPlay = -Infinity
         item.onPlaying = options.onPlaying ?? null
         item.onPlay = options.onPlay ?? null
-        item.loaded = options.preload ?? true
+        item.loaded = preload
+        item.deferredPreload = wantsPreload && !preload
         item.autoplay = options.autoplay ?? false
         item.playing = (this.initiated && options.autoplay) ?? false
         item.id = group.items.length

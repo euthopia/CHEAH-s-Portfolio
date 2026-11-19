@@ -38,7 +38,9 @@ export class SocialArea extends Area
 
         for(const link of socialData)
         {
-            const angle = i * Math.PI / (socialData.length - 1)
+            const slot = typeof link.slot === 'number' ? link.slot : i
+            const slotCount = socialData.reduce((max, item, index) => Math.max(max, typeof item.slot === 'number' ? item.slot : index), 0)
+            const angle = slot * Math.PI / slotCount
             const position = this.center.clone()
             position.x += Math.cos(angle) * radius
             position.y = 1
@@ -53,8 +55,10 @@ export class SocialArea extends Area
                 {
                     if(link.url)
                         window.open(link.url, '_blank')
-                    else(link.modal)
+                    else if(link.modal)
                         this.game.modals.open(link.modal)
+                    else if(link.action)
+                        this.game.extras?.run(link.action)
                 },
                 () =>
                 {
@@ -173,7 +177,7 @@ export class SocialArea extends Area
     {
         const interactiveArea = this.game.interactivePoints.create(
             this.references.items.get('onlyFans')[0].position,
-            'OnlyFans',
+            'Fan club',
             InteractivePoints.ALIGN_RIGHT,
             InteractivePoints.STATE_CONCEALED,
             () =>
